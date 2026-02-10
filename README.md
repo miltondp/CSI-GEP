@@ -35,6 +35,27 @@ We provide Docker images that minimize complexity of configuration, and a step-b
    ```
 An example code of executing the Dockerized CSI-GEP *csigep_submit.bsub* can be found at Docker/.
 
+## Changelog                                                                  
+                                                                                
+  ### Docker Image Update (2026-02-10)                                          
+                                                                                
+  **Fixed:** Boolean argument parsing bug in `GEP_analysis.R`                   
+                                                                                
+  The `check_for_rescue` parameter (argument 5) was not being properly converted
+   from string to logical, causing the rescue logic to fail silently.           
+                                                                                
+  **Fix:** Changed argument parsing to explicitly convert:                      
+  ```r                                                                          
+  # Before (buggy)                                                              
+  check_for_rescue = args[5]                                                    
+                                                                                
+  # After (fixed)                                                               
+  check_for_rescue = as.logical(as.numeric(args[5]))                            
+   ```                                                                             
+  Docker image tags:                                                            
+  - ghcr.io/geeleherlab/csi-gep_r:latest - Fixed version (recommended)          
+  - ghcr.io/geeleherlab/csi-gep_r:v1-deprecated - Original version with bug
+
 
 ## Benchmarking 
 We show a complete example of benchmarking analysis on a simulated dataset with 250,000 cells and 25,000 genes. The simulated data is stored at simulated_data/.\
